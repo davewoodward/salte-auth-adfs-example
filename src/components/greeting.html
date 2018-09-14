@@ -1,0 +1,42 @@
+<template id="greeting">
+<h1 id="message">This should be replaced!!!</h1>
+</template>
+
+<script>
+(() => {
+  const importDocument = document.currentScript.ownerDocument;
+
+  customElements.define('example-greeting', class extends HTMLElement {
+    constructor() {
+      super();
+      let root = this.attachShadow({mode: 'open'});
+      let template = importDocument.getElementById('greeting');
+      let templateClone = document.importNode(template.content, true);
+      root.appendChild(templateClone);
+    }
+
+    connectedCallback() {
+      const auth = new window.salte.SalteAuth();
+      auth.retrieveAccessToken().then((accessToken) => {
+        fetch('http://api.example.com/', {
+          headers: {
+            'Authorization': `Bearer ${accessToken}`
+          }
+        }).then(response => {
+          if (response.status === 200) {
+            return response.json();
+          } else {
+            return Promise.reject(new Error(response.statusText))
+          }
+        }).then(greeting => {
+          let message = this.shadowRoot.getElementById('message');
+          message.innerHTML = greeting.Message;
+        }).catch((error) => {
+          let message = this.shadowRoot.getElementById('message');
+          message.innerHTML = error.message;
+        });
+      });
+    };
+  });
+})();
+</script>

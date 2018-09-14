@@ -1,0 +1,43 @@
+<script src="/../../node_modules/@salte-io/salte-auth/dist/salte-auth.js"></script>
+
+<template id="auth">
+
+</template>
+
+  <script>
+  (() => {
+    const importDocument = document.currentScript.ownerDocument;
+
+    customElements.define('example-auth', class extends HTMLElement {
+      constructor() {
+        super();
+        let root = this.attachShadow({mode: 'open'});
+        let template = importDocument.getElementById('auth');
+        let templateClone = document.importNode(template.content, true);
+        root.appendChild(templateClone);
+      }
+
+      connectedCallback() {
+        const auth = new window.salte.SalteAuth({
+          providerUrl: 'https://windows-01.alpha-salte.io/adfs',
+          responseType: 'id_token token',
+          redirectUrl: 'http://app.example.com/',
+          clientId: '453afabf-6f80-4718-9eb8-e798fe59c858',
+          scope: 'openid profile',
+          routes: true,
+          endpoints: [
+            'http://api.example.com/'
+          ],
+          provider: 'azure',
+          queryParams: {
+            resource: 'http://api.example.com/'
+          }
+        });
+
+        if (auth.profile.idTokenExpired) {
+          auth.loginWithRedirect();
+        }
+      };
+    });
+  })();
+  </script>

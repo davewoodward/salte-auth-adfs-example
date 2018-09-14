@@ -1,0 +1,22 @@
+{
+  "name": "SPA-Example",
+  "version": "1.0.0",
+  "description": "Demonstrates ADFS SPA implicit flow integration.",
+  "main": "server.js",
+  "author": "Dave Woodward",
+  "license": "MIT",
+  "scripts": {
+    "start": "node -r dotenv/config ."
+  },
+  "dependencies": {
+    "@polymer/lit-element": "^0.5.2",
+    "@salte-io/salte-auth": "^2.11.5",
+    "@webcomponents/webcomponentsjs": "^2.1.1",
+    "cors": "^2.8.4",
+    "dotenv": "^6.0.0",
+    "express": "^4.16.3",
+    "express-jwt": "^5.3.1",
+    "express-subdomain": "^1.0.5",
+    "path": "^0.12.7"
+  }
+}
