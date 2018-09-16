@@ -4,7 +4,7 @@ const router = express.Router();
 const bodyParser = require('body-parser')
 const queryString = require('query-string');
 
-router.use(bodyParser.urlencoded({ extended: false }))
+router.use(bodyParser.urlencoded({ extended: false }));
 
 router.get('*', (req, res, next) => {
   res.sendFile(path.resolve(`${__dirname}/../..`, 'index.html'));
