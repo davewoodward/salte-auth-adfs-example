@@ -8,7 +8,7 @@
 
 <script src="/node_modules/@salte-io/salte-auth/dist/salte-auth.js"></script>
 <script>
-  const auth = new window.salte.SalteAuth({
+  const auth = new salte.SalteAuth({
     providerUrl: 'https://adfs.example.com/adfs',
     responseType: 'id_token token',
     redirectUrl: 'http://app.example.com/',
@@ -20,7 +20,8 @@
     ],
     provider: 'azure',
     queryParams: {
-      resource: 'http://api.example.com/'
+      resource: 'http://api.example.com/',
+      response_mode: 'form_post'
     }
   });
 
